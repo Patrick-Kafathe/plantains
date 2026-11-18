@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | The Plantains Place</title>
+<link rel="icon" href="images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--g:#2f6b2f;--deep:#143417;--sun:#f2b61f;--bg:#f3f5ee;--ink:#1d2a1b;--mut:#66745f;--line:#e1e7d6;--h:'Outfit',system-ui,sans-serif;--b:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--b);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}[hidden]{display:none!important}
+.i{display:inline-flex;vertical-align:middle}
+/* gate */
+#gate{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(150deg,var(--deep),#2f6b2f)}
+.gbox{background:#fff;border-radius:24px;padding:40px 34px;width:100%;max-width:400px;text-align:center;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.gbox img{width:92px;height:92px;border-radius:50%;margin:0 auto 14px;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.gbox h1{font:800 1.5rem var(--h);color:var(--deep)}.gbox p{color:var(--mut);font-size:.9rem;margin:6px 0 20px}
+.gbox input{width:100%;padding:14px;border:1.5px solid var(--line);border-radius:12px;font:inherit;margin-bottom:12px;text-align:center}
+.err{color:#b3261e;font-size:.84rem;min-height:20px;margin-bottom:6px}
+/* layout */
+#app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--deep);color:#fff;padding:22px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.bk{display:flex;align-items:center;gap:12px;padding:4px 8px 22px}
+.bk img{width:46px;height:46px;border-radius:50%;background:#fff}
+.bk b{font:800 1.02rem/1.15 var(--h)}.bk small{display:block;opacity:.6;font-size:.72rem;font-weight:400}
+aside nav{display:grid;gap:3px}
+.nv{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:0;background:none;color:#cfe0c4;font:500 .92rem var(--b);text-align:left;transition:.15s}
+.nv:hover{background:rgba(255,255,255,.08);color:#fff}
+.nv.on{background:var(--sun);color:#2b1f00;font-weight:600}
+main{padding:0 0 60px;min-width:0}
+.top{position:sticky;top:0;z-index:20;background:rgba(243,245,238,.92);backdrop-filter:blur(10px);padding:16px 30px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.top h1{font:800 1.5rem var(--h);color:var(--deep);margin-right:auto}
+.st{font-size:.78rem;color:var(--mut);display:flex;align-items:center;gap:6px}
+.st::before{content:"";width:8px;height:8px;border-radius:50%;background:#7bc043}
+.st.dirty::before{background:var(--sun)}
+.pg{padding:26px 30px;max-width:1000px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;border:0;background:var(--g);color:#fff;font:600 .88rem var(--b);transition:.15s;text-decoration:none}
+.btn:hover{background:var(--deep)}
+.btn.sun{background:var(--sun);color:#2b1f00}.btn.sun:hover{background:#e0a615}
+.btn.s{padding:8px 14px;font-size:.8rem;border-radius:10px}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.btn.ghost:hover{background:#f6f8f1}
+.btn.add{background:#eaf3dd;color:var(--g);width:100%;justify-content:center;border:1.5px dashed #b6d198;padding:14px}.btn.add:hover{background:#dcebc8}
+.card{background:#fff;border-radius:18px;padding:24px;margin-bottom:22px;box-shadow:0 6px 20px -12px rgba(20,52,23,.2)}
+.card>h2{font:700 1.2rem var(--h);color:var(--deep)}
+.card>p.sub{color:var(--mut);font-size:.88rem;margin:4px 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.f{display:grid;gap:6px;margin-bottom:14px;align-content:start}
+.f>span{font:600 .78rem var(--b);color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+.f small{color:var(--mut);font-size:.76rem}
+input[type=text],input[type=tel],input[type=email],input[type=url],input[type=password],input:not([type]),select,textarea{font:400 .93rem var(--b);padding:12px 13px;border:1.5px solid var(--line);border-radius:11px;background:#fbfcf8;width:100%;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--g);box-shadow:0 0 0 4px rgba(47,107,47,.12)}
+input[type=color]{width:100%;height:46px;border:1.5px solid var(--line);border-radius:11px;padding:4px;background:#fbfcf8}
+.thumb{height:150px;border-radius:12px;border:2px dashed #c9d6b6;background:#f4f8ec;display:grid;place-items:center;overflow:hidden;color:var(--mut);font-size:.84rem;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:grid;gap:14px}
+.item{border:1.5px solid var(--line);border-radius:16px;background:#fcfdf9;overflow:hidden}
+.item-h{display:flex;align-items:center;gap:6px;padding:10px 12px 10px 16px;background:#f1f6e8;border-bottom:1px solid var(--line)}
+.item-h b{font:700 .95rem var(--h);color:var(--deep)}.sp{flex:1}
+.ib{width:34px;height:34px;border-radius:9px;border:0;background:#fff;color:var(--mut);display:grid;place-items:center}
+.ib:hover{background:var(--g);color:#fff}.ib.del:hover{background:#c62828}
+.item-b{padding:16px;display:grid;grid-template-columns:230px 1fr;gap:18px}
+.item-b .col{min-width:0}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px}
+.gi{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.gi .thumb{height:130px;border:0;border-radius:0}
+.gi .b{padding:10px;display:grid;gap:8px}
+.gi select,.gi input{padding:8px 10px;font-size:.82rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 20px -12px rgba(20,52,23,.2)}
+.stat b{display:block;font:800 1.9rem var(--h);color:var(--g)}.stat span{font-size:.8rem;color:var(--mut)}
+.bar{height:8px;border-radius:99px;background:#e7eedb;margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),#8bc34a)}
+ol.steps{margin:12px 0 0 20px;display:grid;gap:8px;font-size:.92rem}
+.tip{background:#fff8e1;border:1px solid #f1dc9a;border-radius:12px;padding:12px 14px;font-size:.84rem;color:#6b5200;margin-top:14px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(30px);background:var(--deep);color:#fff;padding:12px 22px;border-radius:99px;font-size:.88rem;opacity:0;transition:.3s;z-index:300;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.modal{position:fixed;inset:0;background:rgba(10,25,12,.6);z-index:200;display:grid;place-items:center;padding:20px}
+.mbox{background:#fff;border-radius:22px;padding:30px;max-width:540px;width:100%}
+.mbox h2{font:800 1.4rem var(--h);color:var(--deep);margin-bottom:6px}
+.item-b .wide{grid-column:1/-1;border-top:1px dashed var(--line);padding-top:14px}
+.sect{margin-bottom:12px;font-size:.84rem;color:var(--mut)}.sect b{font:700 .95rem var(--h);color:var(--deep)}
+.lbl{display:block;font:600 .78rem var(--b);color:var(--mut);letter-spacing:.04em;text-transform:uppercase;margin:6px 0 8px}
+.mgal{display:flex;gap:8px;flex-wrap:wrap}.mt{color:var(--mut);font-size:.82rem}
+.mth{position:relative;width:96px;height:72px;border-radius:10px;overflow:hidden;border:1.5px solid var(--line)}.mth img{width:100%;height:100%;object-fit:cover}
+.mth .ib{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%}
+input[type=range]{flex:1;min-width:180px;accent-color:var(--g);padding:0;border:0;background:none}
+@media(max-width:900px){
+ #app{grid-template-columns:1fr}
+ aside{position:static;height:auto;padding:12px}
+ .bk{padding:0 6px 10px}
+ aside nav{display:flex;overflow:auto;gap:6px;padding-bottom:4px}.nv{white-space:nowrap;padding:10px 14px}
+ .top{padding:12px 16px;position:static}.pg{padding:18px 16px}
+ .grid2,.grid3,.item-b{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+ <form class="gbox" id="gf">
+  <img src="images/logo.jpg" alt="Logo">
+  <h1>Admin Panel</h1>
+  <p>Enter the admin PIN to manage the website.</p>
+  <input type="password" id="pin" placeholder="Admin PIN" autocomplete="current-password" autofocus>
+  <div class="err" id="gerr"></div>
+  <button class="btn sun" style="width:100%;justify-content:center" type="submit">Unlock</button>
+</form>
+</div>
+
+<div id="app" hidden>
+ <aside>
+  <div class="bk"><img src="images/logo.jpg" alt=""><div><b>The Plantains Place</b><small>Website admin</small></div></div>
+  <nav id="nav"></nav>
+ </aside>
+ <main>
+  <div class="top">
+   <h1 id="ttl">Overview</h1>
+   <span class="st" id="st">Loaded</span>
+   <button class="btn ghost s" id="pv"></button>
+   <button class="btn sun s" id="pb"></button>
+  </div>
+  <div class="pg" id="view"></div>
+ </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="icons.js"></script>
+<script src="site-data.js"></script>
+<script>
+(function(){
+'use strict';
+var PUB=JSON.parse(JSON.stringify(window.SITE_DATA)),D=null,edited=false;
+var $=function(s){return document.querySelector(s)};
+function h(t,a){var e=document.createElement(t);a=a||{};for(var n in a){var v=a[n];if(n==='class')e.className=v;else if(n==='html')e.innerHTML=v;else if(n.indexOf('on')===0)e[n]=v;else if(v===true)e.setAttribute(n,'');else if(v!==false&&v!=null)e.setAttribute(n,v)}
+ for(var i=2;i<arguments.length;i++){(function add(c){if(c==null||c===false)return;if(Array.isArray(c))return c.forEach(add);e.append(c.nodeType?c:document.createTextNode(c))})(arguments[i])}return e}
+function ic(n,s){var e=document.createElement('span');e.className='i';e.innerHTML=IC(n,s||16);return e}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},2400)}
+
+/* ---------- storage (draft kept in this browser) ---------- */
+function db(){return new Promise(function(res,rej){var r=indexedDB.open('plantains-admin',1);r.onupgradeneeded=function(){r.result.createObjectStore('kv')};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}})}
+function idbGet(k){return db().then(function(d){return new Promise(function(res){var q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=function(){res(q.result||null)};q.onerror=function(){res(null)}})}).catch(function(){return null})}
+function idbSet(k,v){return db().then(function(d){return new Promise(function(res,rej){var t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=res;t.onerror=function(){rej(t.error)}})})}
+function idbDel(k){return db().then(function(d){return new Promise(function(res){var t=d.transaction('kv','readwrite');t.objectStore('kv').delete(k);t.oncomplete=res})})}
+var timer;
+function touch(){edited=true;setSt();clearTimeout(timer);timer=setTimeout(flush,500)}
+function flush(){clearTimeout(timer);return idbSet('draft',D).then(function(){setSt()}).catch(function(){toast('Could not save draft: browser storage is full or blocked')})}
+function setSt(){var s=$('#st');s.className='st'+(edited?' dirty':'');s.textContent=edited?'Draft saved · not published yet':'Matches published site'}
+
+/* ---------- images ---------- */
+function fileToData(file,max,png){return new Promise(function(res,rej){var r=new FileReader();r.onerror=rej;r.onload=function(){var i=new Image();i.onerror=rej;i.onload=function(){var s=Math.min(1,max/Math.max(i.width,i.height)),w=Math.round(i.width*s),hh=Math.round(i.height*s),c=document.createElement('canvas');c.width=w;c.height=hh;var x=c.getContext('2d'),keep=png&&file.type==='image/png';if(!keep){x.fillStyle='#fff';x.fillRect(0,0,w,hh)}x.drawImage(i,0,0,w,hh);res(c.toDataURL(keep?'image/png':'image/jpeg',.8))};i.src=r.result};r.readAsDataURL(file)})}
+
+/* ---------- field builders ---------- */
+function txt(o,k,label,opt){opt=opt||{};var i=opt.area?h('textarea',{rows:opt.rows||3}):h('input',{type:opt.type||'text'});i.value=o[k]==null?'':o[k];if(opt.ph)i.placeholder=opt.ph;i.oninput=function(){o[k]=i.value;touch()};return h('label',{class:'f'},h('span',{},label),i,opt.hint?h('small',{},opt.hint):null)}
+function sel(o,k,label,opts,after){var s=h('select');opts.forEach(function(p){var v=Array.isArray(p)?p[0]:p,t=Array.isArray(p)?p[1]:p;var op=h('option',{value:v},t);if(o[k]===v)op.selected=true;s.append(op)});s.onchange=function(){o[k]=s.value;touch();if(after)after()};return h('label',{class:'f'},h('span',{},label),s)}
+function pic(o,k,label,max,png){
+ var prev=h('div',{class:'thumb'}),file=h('input',{type:'file',accept:'image/*',hidden:true}),rm;
+ function draw(){prev.innerHTML='';if(o[k])prev.append(h('img',{src:o[k],alt:''}));else prev.append(h('span',{},'Click Upload or drop a photo here'));if(rm)rm.style.display=o[k]?'':'none'}
+ function take(f){if(!f||f.type.indexOf('image/')!==0)return;fileToData(f,max||1600,png).then(function(d){o[k]=d;draw();touch()}).catch(function(){toast('That file could not be read as an image')})}
+ var up=h('button',{class:'btn s',type:'button',onclick:function(){file.click()}},ic('upload'),'Upload');
+ rm=h('button',{class:'btn s ghost',type:'button',onclick:function(){o[k]='';draw();touch()}},ic('trash'),'Remove');
+ file.onchange=function(){take(file.files[0]);file.value=''};
+ prev.ondragover=function(e){e.preventDefault()};prev.ondrop=function(e){e.preventDefault();take(e.dataTransfer.files[0])};
+ draw();return h('div',{class:'f'},h('span',{},label),prev,h('div',{class:'row'},up,rm,file));
+}
+function list(arr,c){
+ var box=h('div',{class:'list'});
+ function draw(){box.innerHTML='';
+  arr.forEach(function(it,i){
+   var mv=function(d){return function(){var j=i+d;if(j<0||j>=arr.length)return;var t=arr[i];arr[i]=arr[j];arr[j]=t;touch();draw()}};
+   box.append(h('div',{class:'item'},h('div',{class:'item-h'},h('b',{},c.title(it,i)),h('span',{class:'sp'}),
+    h('button',{class:'ib',title:'Move up',onclick:mv(-1)},ic('up')),h('button',{class:'ib',title:'Move down',onclick:mv(1)},ic('down')),
+    h('button',{class:'ib del',title:'Remove',onclick:function(){if(arr.length<=(c.min||0)){toast('Keep at least '+(c.min||0)+' here');return}if(confirm('Remove this item?')){arr.splice(i,1);touch();draw()}}},ic('trash'))),
+    h('div',{class:'item-b'},c.body(it,i))))});
+  box.append(h('button',{class:'btn add',type:'button',onclick:function(){arr.push(c.make());touch();draw()}},ic('plus'),c.add||'Add'))}
+ draw();return box}
+function card(title,sub){var c=h('div',{class:'card'},h('h2',{},title));if(sub)c.append(h('p',{class:'sub'},sub));for(var i=2;i<arguments.length;i++)c.append(arguments[i]);return c}
+
+function multi(o,k,label){
+ if(!o[k])o[k]=[];
+ var box=h('div',{class:'mgal'}),file=h('input',{type:'file',accept:'image/*',multiple:true,hidden:true});
+ function draw(){box.innerHTML='';o[k].forEach(function(src,i){box.append(h('div',{class:'mth'},h('img',{src:src,alt:''}),h('button',{class:'ib del',type:'button',title:'Remove photo',onclick:function(){o[k].splice(i,1);touch();draw()}},ic('close',12))))});if(!o[k].length)box.append(h('span',{class:'mt'},'No extra photos yet.'))}
+ file.onchange=function(){var fs=Array.prototype.slice.call(file.files);file.value='';if(!fs.length)return;toast('Processing '+fs.length+' photo'+(fs.length>1?'s':'')+'…');
+  Promise.all(fs.map(function(f){return fileToData(f,1400)})).then(function(ds){ds.forEach(function(d){o[k].push(d)});touch();draw()}).catch(function(){toast('One of the files could not be read')})};
+ draw();return h('div',{class:'f'},h('span',{},label),box,h('div',{class:'row'},h('button',{class:'btn s',type:'button',onclick:function(){file.click()}},ic('upload'),'Add photos'),file))}
+function extra(it,kind){
+ if(!it.gallery)it.gallery=[];
+ return h('div',{class:'wide'},h('div',{class:'sect'},h('b',{},'Pop-up details'),h('span',{},' opens when a visitor clicks this item')),
+  h('div',{class:'grid2'},txt(it,'price','Price or rate note (optional)',{ph:'e.g. From KES 3,000 per night'}),kind==='rooms'?h('div'):txt(it,'highlights','Highlights (one per line)',{area:true,rows:3})),
+  txt(it,'details','Longer description',{area:true,rows:4,hint:'Leave a blank line between paragraphs.'}),
+  multi(it,'gallery','More photos shown in the pop-up'))}
+
+/* ---------- pages ---------- */
+function countPics(){var t=0,f=0;(function w(o){if(!o||typeof o!=='object')return;if(Array.isArray(o))return o.forEach(w);Object.keys(o).forEach(function(k){if(k==='img'){t++;if(o[k])f++}else w(o[k])})})(D);if(D.settings.logo){}return[t,f]}
+var PAGES=[
+['overview','Overview','home'],['banners','Slide Banners','layers'],['rooms','Rooms & Blocks','bed'],['pool','Pool, Play & Events','waves'],['food','Food','utensils'],['activities','Activities','star'],['gallery','Gallery','image'],['about','About Us','smile'],['contact','Contact & Social','phone'],['settings','Settings','sliders']];
+
+var V={
+overview:function(){
+ var p=countPics(),pct=p[0]?Math.round(p[1]/p[0]*100):0,size=(JSON.stringify(D).length/1048576).toFixed(1);
+ var w=h('div');
+ w.append(h('div',{class:'stats'},
+  h('div',{class:'stat'},h('b',{},p[1]+' / '+p[0]),h('span',{},'photo slots filled'),h('div',{class:'bar'},h('i',{style:'width:'+pct+'%'}))),
+  h('div',{class:'stat'},h('b',{},String((D.gallery||[]).length)),h('span',{},'gallery photos')),
+  h('div',{class:'stat'},h('b',{},String(D.rooms.length)),h('span',{},'rooms & blocks')),
+  h('div',{class:'stat'},h('b',{},size+' MB'),h('span',{},'site data size'))));
+ w.append(card('How to publish your changes','Everything you edit is saved on this device as a draft. Visitors see changes after you publish.',
+  h('ol',{class:'steps'},h('li',{},'Edit photos, banners, rooms and contacts using the menu on the left.'),h('li',{},'Click Preview Site to check how it looks.'),h('li',{},'Click Publish. This downloads a file called site-data.js.'),h('li',{},'Upload that file to your hosting, replacing the old site-data.js. The live site updates immediately.')),
+  h('div',{class:'tip'},'Keep photo sizes sensible: the panel compresses uploads automatically, but a site with more than about 25 MB of photos will load slowly.')));
+ w.append(card('Quick start','Jump straight to the most common jobs.',
+  h('div',{class:'row'},[['banners','Change home banners','layers'],['gallery','Add gallery photos','image'],['rooms','Edit rooms','bed'],['contact','Update contacts','phone']].map(function(q){return h('button',{class:'btn ghost',onclick:function(){go(q[0])}},ic(q[2]),q[1])}))));
+ return w},
+
+banners:function(){
+ var w=h('div'),S=D.settings;
+ var out=h('b',{style:'min-width:56px'},(S.bannerHeight||140)+' px'),rg=h('input',{type:'range',min:100,max:320,step:5,value:S.bannerHeight||140});
+ rg.oninput=function(){S.bannerHeight=+rg.value;out.textContent=rg.value+' px';touch()};
+ w.append(card('Section banner height','Height of the slideshows in Rooms, Pool & Play, Events and Food on large screens. Phones scale down automatically.',h('div',{class:'row',style:'align-items:center;gap:14px;flex-wrap:nowrap'},rg,out)));
+ [['hero','Home page banners','The big slideshow at the top of the home page. Each slide has a headline and a short line below it.',1600],['rooms','Rooms banner','Wide slideshow at the top of the Rooms section.'],['pool','Pool & play banner','Slideshow in the Pool and Play Grounds section.'],['events','Events banner','Slideshow beside the Events text.'],['food','Food banner','Slideshow at the top of the Food section.']].forEach(function(s){
+  var arr=D.banners[s[0]];
+  w.append(card(s[1],s[2],list(arr,{title:function(it,i){return'Slide '+(i+1)+(it.title?' · '+it.title:'')},add:'Add slide',min:1,make:function(){return{img:'',title:'New slide',sub:''}},
+   body:function(it){return[h('div',{class:'col'},pic(it,'img','Banner photo',1920)),h('div',{class:'col'},txt(it,'title','Headline'),txt(it,'sub','Small line below',{area:true,rows:2}))]}})))});
+ return w},
+
+rooms:function(){
+ return card('Rooms & blocks','Each one appears as a card on the website with an Enquire button that opens WhatsApp.',list(D.rooms,{title:function(it,i){return(it.name||'Room')},add:'Add room or block',make:function(){return{tag:'New',name:'New Block',desc:'',features:'',img:'',details:'',price:'',gallery:[]}},
+  body:function(it){return[h('div',{class:'col'},pic(it,'img','Photo',1400)),h('div',{class:'col'},h('div',{class:'grid2'},txt(it,'name','Name'),txt(it,'tag','Small label',{ph:'Block 1, Family…'})),txt(it,'desc','Description',{area:true,rows:3}),txt(it,'features','Features (one per line)',{area:true,rows:3})),extra(it,'rooms')]}}))},
+
+pool:function(){
+ var w=h('div'),E=D.events;
+ w.append(card('Swimming pool & play grounds','Tiles shown under the pool banner. Visitors can click each one to open its pop-up.',list(D.grounds,{title:function(it){return it.title||'Tile'},add:'Add tile',make:function(){return{title:'New area',desc:'',img:'',details:'',highlights:'',price:'',gallery:[]}},
+  body:function(it){return[h('div',{class:'col'},pic(it,'img','Photo',1400)),h('div',{class:'col'},txt(it,'title','Title'),txt(it,'desc','Short description',{area:true,rows:2})),extra(it,'grounds')]}})));
+ w.append(card('Events & meetings','Text shown beside the events slideshow. Change the slideshow photos under Slide Banners.',
+  h('div',{class:'grid2'},txt(E,'eyebrow','Small label above title'),txt(E,'title','Title')),txt(E,'text','Intro text',{area:true,rows:3}),txt(E,'list','What you host (one per line)',{area:true,rows:5})));
+ return w},
+
+food:function(){
+ return card('Food & catering','Dishes shown in the sliding food row. Change the wide food banner under Slide Banners.',list(D.food,{title:function(it){return it.title||'Dish'},add:'Add dish',make:function(){return{title:'New dish',desc:'',img:'',details:'',highlights:'',price:'',gallery:[]}},
+  body:function(it){return[h('div',{class:'col'},pic(it,'img','Photo',1200)),h('div',{class:'col'},txt(it,'title','Dish name'),txt(it,'desc','Short description',{area:true,rows:3})),extra(it,'food')]}}))},
+
+activities:function(){
+ var names=window.ICON_NAMES;
+ return card('Activities','The "What you can do here" buttons. Visitors click one to open a panel with related activities below it.',list(D.activities,{title:function(it){return it.title||'Activity'},add:'Add activity',make:function(){return{icon:'star',title:'New activity',desc:'',details:'',items:[]}},
+  body:function(it){if(!it.items)it.items=[];var pv=h('div',{style:'width:54px;height:54px;border-radius:16px;background:var(--g);color:#fff;display:grid;place-items:center;margin-bottom:10px',html:IC(it.icon,26)});
+   return[h('div',{class:'col'},h('span',{class:'f'},h('span',{},'Icon')),pv,sel(it,'icon','Choose icon',names,function(){pv.innerHTML=IC(it.icon,26)})),h('div',{class:'col'},txt(it,'title','Title'),txt(it,'desc','Short description',{area:true,rows:2})),
+   h('div',{class:'wide'},h('div',{class:'sect'},h('b',{},'Panel that opens below the button'),h('span',{},' shown when a visitor clicks this activity')),txt(it,'details','Longer description',{area:true,rows:3}),
+    h('span',{class:'lbl'},'Related activities'),
+    list(it.items,{title:function(t){return t.title||'Related activity'},add:'Add related activity',make:function(){return{title:'New related activity',desc:'',img:''}},
+     body:function(t){return[h('div',{class:'col'},pic(t,'img','Photo (optional)',1200)),h('div',{class:'col'},txt(t,'title','Title'),txt(t,'desc','Short description',{area:true,rows:2}))]}}))]}}))},
+
+gallery:function(){
+ var w=h('div'),cat={cat:'grounds'},grid=h('div',{class:'gal'}),CATS=[['rooms','Rooms'],['grounds','Grounds & pool'],['events','Events'],['food','Food']];
+ var file=h('input',{type:'file',accept:'image/*',multiple:true,hidden:true});
+ function drawGrid(){grid.innerHTML='';
+  if(!D.gallery.length)grid.append(h('p',{class:'sub',style:'grid-column:1/-1;color:var(--mut)'},'No gallery photos yet. Choose a category above and upload some.'));
+  D.gallery.forEach(function(g,i){
+   var th=h('div',{class:'thumb'},h('img',{src:g.img,alt:''}));
+   grid.append(h('div',{class:'gi'},th,h('div',{class:'b'},sel(g,'cat','Category',CATS.map(function(c){return c}).concat(CATS.some(function(c){return c[0]===g.cat})?[]:[[g.cat,g.cat]])),
+    txt(g,'caption','Caption'),h('button',{class:'btn s ghost',onclick:function(){if(confirm('Remove this photo?')){D.gallery.splice(i,1);touch();drawGrid()}}},ic('trash'),'Remove'))))})}
+ file.onchange=function(){var fs=Array.prototype.slice.call(file.files);file.value='';if(!fs.length)return;toast('Processing '+fs.length+' photo'+(fs.length>1?'s':'')+'…');
+  Promise.all(fs.map(function(f){return fileToData(f,1400)})).then(function(ds){ds.forEach(function(d){D.gallery.push({cat:cat.cat,img:d,caption:''})});touch();drawGrid();toast('Added '+ds.length+' photo'+(ds.length>1?'s':''))}).catch(function(){toast('One of the files could not be read')})};
+ w.append(card('Add gallery photos','Pick a category, then select one or many photos at once.',
+  h('div',{class:'grid2'},sel(cat,'cat','Category for these photos',CATS),h('div',{class:'f'},h('span',{},'Photos'),h('button',{class:'btn',onclick:function(){file.click()}},ic('upload'),'Select photos'),file)),grid));
+ drawGrid();return w},
+
+about:function(){
+ var A=D.about;
+ return card('About us','The story section under the home banner.',h('div',{class:'grid2'},h('div',{},pic(A,'img','Photo',1400)),h('div',{},txt(A,'eyebrow','Small label above title'),txt(A,'title','Title'))),txt(A,'text','Story',{area:true,rows:7,hint:'Leave a blank line between paragraphs.'}),txt(A,'features','Feature chips (one per line)',{area:true,rows:5}))},
+
+contact:function(){
+ var S=D.settings,w=h('div');
+ w.append(card('Contact details','Shown in the contact section, footer and booking area.',
+  h('div',{class:'grid2'},txt(S,'phone','Phone (as shown)'),txt(S,'whatsapp','WhatsApp number',{hint:'Digits only with country code, e.g. 254717218083'}),txt(S,'email','Email',{type:'email'}),txt(S,'website','Website address'),txt(S,'address','Address'),txt(S,'hours','Opening hours')),
+  txt(S,'mapQuery','Map search text',{hint:'What Google Maps searches for. Use the exact place name and town, or paste a full address.'}),txt(S,'bookingUrl','Booking.com link (optional)',{type:'url'})));
+ w.append(card('Social media','Full page links. Icons appear automatically once a link is added.',
+  h('div',{class:'grid2'},txt(S,'facebook','Facebook page link',{type:'url',ph:'https://www.facebook.com/…'}),txt(S,'instagram','Instagram link',{type:'url',ph:'https://www.instagram.com/…'}),txt(S,'tiktok','TikTok link',{type:'url',ph:'https://www.tiktok.com/@…'}),txt(S,'x','X (Twitter) link',{type:'url',ph:'https://x.com/…'})),
+  h('div',{class:'tip'},'With a Facebook page link, the live Facebook timeline shows on the site. Instagram, TikTok and X need their own embed code (below).'),
+  h('div',{style:'height:14px'}),txt(S,'socialEmbeds','Embed code for individual posts (optional)',{area:true,rows:5,hint:'On Instagram, TikTok or X, open a post, choose Embed, copy the code and paste it here. Paste several to show several posts.'})));
+ return w},
+
+settings:function(){
+ var S=D.settings,w=h('div'),pin={v:''};
+ w.append(card('Brand','Name, logo and colours used across the site.',
+  h('div',{class:'grid2'},h('div',{},pic(S,'logo','Logo',600,true)),h('div',{},txt(S,'name','Business name'),txt(S,'tagline','Tagline'),txt(S,'footerNote','Footer line'))),
+  h('div',{class:'grid2'},h('label',{class:'f'},h('span',{},'Main colour'),colorIn(S,'colorPrimary')),h('label',{class:'f'},h('span',{},'Accent colour'),colorIn(S,'colorAccent')))));
+ var pi=h('input',{type:'password',placeholder:'New PIN (at least 4 characters)'});
+ w.append(card('Admin PIN','A simple lock for this panel on this device. It is a convenience, not strong security.',h('label',{class:'f'},h('span',{},'New PIN'),pi),h('button',{class:'btn',onclick:function(){if(pi.value.length<4){toast('PIN must be at least 4 characters');return}localStorage.setItem('pp_pin',pi.value);pi.value='';toast('PIN changed')}},ic('lock'),'Save PIN')));
+ w.append(card('Start over','Discard your unpublished draft and go back to the currently published content.',h('button',{class:'btn ghost',onclick:function(){if(confirm('Discard all unpublished changes?')){idbDel('draft').then(function(){location.reload()})}}},ic('trash'),'Discard draft')));
+ return w}
+};
+function colorIn(o,k){var i=h('input',{type:'color'});i.value=o[k]||'#2f6b2f';i.oninput=function(){o[k]=i.value;touch()};return i}
+
+/* ---------- shell ---------- */
+var cur='overview';
+function go(id){cur=id;var p=PAGES.filter(function(x){return x[0]===id})[0];$('#ttl').textContent=p[1];var v=$('#view');v.innerHTML='';v.append(V[id]());
+ Array.prototype.forEach.call(document.querySelectorAll('.nv'),function(b){b.classList.toggle('on',b.dataset.id===id)});scrollTo(0,0)}
+function ensure(){D=D||{};var def=JSON.parse(JSON.stringify(PUB));Object.keys(def).forEach(function(k){if(D[k]==null)D[k]=def[k]});['hero','rooms','pool','events','food'].forEach(function(k){if(!D.banners[k])D.banners[k]=[]});if(!D.gallery)D.gallery=[];if(!D.settings.bannerHeight)D.settings.bannerHeight=140;['rooms','grounds','food'].forEach(function(k){(D[k]||[]).forEach(function(it){if(!it.gallery)it.gallery=[]})});(D.activities||[]).forEach(function(a){if(!a.items)a.items=[]})}
+function publish(){
+ flush().then(function(){
+  var txt='/* The Plantains Place website content. Generated by admin.html on '+new Date().toISOString()+'. Upload to replace site-data.js */\nwindow.SITE_DATA = '+JSON.stringify(D)+';\n';
+  var a=h('a',{href:URL.createObjectURL(new Blob([txt],{type:'text/javascript'})),download:'site-data.js'});document.body.append(a);a.click();a.remove();
+  var m=h('div',{class:'modal',onclick:function(e){if(e.target===m)m.remove()}},h('div',{class:'mbox'},h('h2',{},'site-data.js downloaded'),h('p',{style:'color:var(--mut);font-size:.92rem'},'One last step to make your changes live:'),
+   h('ol',{class:'steps'},h('li',{},'Open your hosting (cPanel, Netlify, GitHub Pages…).'),h('li',{},'Upload site-data.js into the same folder as index.html, replacing the old one.'),h('li',{},'Refresh the website. Your changes are live.')),
+   h('div',{style:'margin-top:20px;display:flex;gap:10px'},h('button',{class:'btn',onclick:function(){m.remove()}},'Done'))));document.body.append(m)})}
+function start(){
+ var nav=$('#nav');PAGES.forEach(function(p){nav.append(h('button',{class:'nv','data-id':p[0],onclick:function(){go(p[0])}},ic(p[2],18),p[1]))});
+ $('#pv').append(ic('eye'),' Preview Site');$('#pb').append(ic('download'),' Publish');
+ $('#pv').onclick=function(){flush().then(function(){window.open('index.html?preview=1','_blank')})};$('#pb').onclick=publish;
+ setSt();go('overview')}
+
+/* ---------- gate + boot ---------- */
+function boot(){$('#gate').hidden=true;$('#app').hidden=false;
+ idbGet('draft').then(function(d){D=d;edited=!!d;ensure();start()})}
+var pinKey=function(){return localStorage.getItem('pp_pin')||'plantains'};
+if(sessionStorage.getItem('pp_ok')==='1')boot();
+$('#gf').onsubmit=function(e){e.preventDefault();if($('#pin').value===pinKey()){sessionStorage.setItem('pp_ok','1');boot()}else{$('#gerr').textContent='Incorrect PIN. Try again.'}};
+})();
+</script>
+</body>
+</html>
